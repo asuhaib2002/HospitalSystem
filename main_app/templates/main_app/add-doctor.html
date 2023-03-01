@@ -1,0 +1,93 @@
+{% extends 'main_app/base.html' %} {% block title %} Add Doctor {% endblock %}
+{% block head %}
+<style>
+.textbox{
+    width: 100%;
+}
+</style>
+{% endblock %}
+{% block content %}
+<form method="POST" action="{% url 'add-doctor' %}">
+    {% csrf_token %}
+  <div class="card" style="margin: 5% 35% 0 35%;">
+    <div class="container">
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
+      <h2 align="center">
+        <b><u>Add Doctor Details</u></b>
+      </h2>
+      <br />
+      <input
+        class="textbox"
+        type="text"
+        name="name"
+        placeholder="Full Name" size="40"/>
+      <br />
+      
+      <input
+        class="textbox"
+        type="text"
+        name="username"
+        placeholder="Username" size="40"/>
+      <br />
+      <input
+        class="textbox"
+        type="email"
+        name="email"
+        placeholder="Email" size="40"/>
+      <br />
+      <input
+        class="textbox"
+        type="password"
+        name="password"
+        placeholder="Enter Password" size="40"/>
+      <br />
+      <input
+        class="textbox"
+        type="password"
+        name="re-password"
+        placeholder="Re Enter Password" size="40"/>
+      <br />
+      <input
+        class="textbox"
+        type="date"
+        name="dob"
+        placeholder="Date of Birth" size="40"/>
+      <br />
+    
+      Gender:<input type="radio" name="gender" value="male" />Male
+      <input type="radio" name="gender" value="female" />Female
+      <input type="radio" name="gender" value="unspecified" />Unspecified
+      <br />
+      <br />
+      Address:
+      <input
+        class="textbox"
+        type="text"
+        name="address"
+        placeholder="Address" size="40"/>
+      <br />
+      Mobile No:
+      <input
+        class="textbox"
+        type="text"
+        name="mobile_no"
+        placeholder="Enter Your Mobile No"
+        size="35"
+      />
+      <br />
+      <input
+        class="textbox"
+        type="file"
+        name="img"
+        placeholder="Enter image" size="40"/>
+      <br />
+      <br />
+      <button type="submit" name="add-doctor" class="btn btn-primary">Add Doctor</button>
+      <input class="btn_clear" type="reset" name="clear" value="Clear" />
+    </div>
+  </div>
+</form>
+
+{% endblock %}

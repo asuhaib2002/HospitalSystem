@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+	<style>
+		body {
+			background-color: #F1F1F1;
+			font-family: Arial, sans-serif;
+		}
+		form {
+			background-color: #0000009a;
+			border-radius: 10px;
+			box-shadow: 0px 0px 20px #BFBFBF;
+			margin: auto;
+			padding: 20px;
+			width: 400px;
+		}
+		h1 {
+			color: #333333;
+			font-size: 24px;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+		input[type=text], input[type=password] {
+			border-radius: 5px;
+			padding: 10px;
+			width: 100%;
+		}
+		input[type=submit] {
+			background-color: #4CAF50;
+			border: none;
+			border-radius: 5px;
+			color: white;
+			cursor: pointer;
+			font-size: 16px;
+			padding: 10px;
+			width: 100%;
+		}
+		input[type=submit]:hover {
+			background-color: #3E8E41;
+		}
+	</style>
+</head>
+<body>
+	<form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+    {% if error_message %}
+    <p>{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>

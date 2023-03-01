@@ -1,0 +1,110 @@
+{% extends 'main_app/base.html' %}
+{% block title %}
+    Doctors
+{% endblock %}
+{% block head %}
+<style>
+       #my-dropdown-menu {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#my-dropdown-menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#my-dropdown-menu li:hover {
+  background-color: #ddd;
+}
+</style>
+{% endblock %}
+{% block content %}
+  <div class="card" style="margin-left: 25%; margin-top: 50px; width: 50%">
+    <div class="card-header">
+      <h3 class="card-title">Employee List</h3>
+    </div>
+    <div class="card-body">
+      <div class="input-group mb-3">
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="text" id="my-input-field" name="my-input-field" placeholder="Search...">
+                <ul id="my-dropdown-menu" style="display: block;width: 203px;border-block: revert;background-color: rgba(255, 233, 144, 0.849);border-radius: 20px;padding-left: 10px; visibility:hidden;">
+                    {% for obj in search_list %}
+                    <li>{{ obj }}</li>
+                    {% endfor %}
+                </ul>
+            <button type="submit" name="patient_search" class="btn btn-primary">Search</button>
+      </div>
+  <table class="table styled-table" >
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in employees %}
+        <tr class="active-row">
+          <td>{{ employee.employee_id }}</td>
+          <td>{{ employee.name }}</td>
+          {% if employee.user.is_active %}
+          <td>Active</td>
+          {% else %}
+          <td>Inactive</td>
+          {% endif %}
+          <td>
+              <a href="{% url 'employeeview' id=employee.employee_id %}"><button class="btn btn-primary profile-button">edit</button></a>
+              
+
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+<script>
+    var inputField = document.getElementById("my-input-field");
+    var dropdownMenu = document.getElementById("my-dropdown-menu");
+    var items = dropdownMenu.getElementsByTagName("li");
+    
+    inputField.addEventListener("input", function() {
+      var filter = inputField.value.toUpperCase();
+      for (var i = 0; i < items.length; i++) {
+        var itemText = items[i].textContent || items[i].innerText;
+        if (itemText.toUpperCase().indexOf(filter) > -1) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
+      }
+      dropdownMenu.style.display = "block";
+      dropdownMenu.style.visibility = "visible"
+    });
+    
+    document.addEventListener("click", function(event) {
+      if (event.target != inputField) {
+        dropdownMenu.style.display = "none";
+        dropdownMenu.style.visibility = "hidden"
+      }
+    });
+    
+    for (var i = 0; i < items.length; i++) {
+      items[i].addEventListener("click", function(event) {
+        inputField.value = event.target.textContent || event.target.innerText;
+        dropdownMenu.style.display = "none";
+      });
+    }
+    </script>
+{% endblock %}

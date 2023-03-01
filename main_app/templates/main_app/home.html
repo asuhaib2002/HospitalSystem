@@ -1,0 +1,133 @@
+{% extends 'main_app/base.html' %}
+{% block title %}
+    home
+{% endblock %}
+{% block head %}
+    
+</script>
+<style>
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888; 
+      border-radius: 10px;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2b2b2b; 
+    }
+    #my-dropdown-menu {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#my-dropdown-menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#my-dropdown-menu li:hover {
+  background-color: #ddd;
+}
+    </style>
+    
+{% endblock %}
+
+{% block content %}
+<div class="body">
+    <div class="row" style="padding-top: 200px; padding-left: 50px;">
+        <div class=" new-patient"  style="overflow-y: scroll; height: 300px; border: 1px solid #ccc; border-radius: 20px; background-color: rgba(255, 255, 255, 0.705); padding-left: 10px;  ">
+          <h2>Create a new patient record</h2>
+          <form method="post" action="">
+            {% csrf_token %}
+            {{ patient_creation_form.as_p }}
+            <button type="submit" name="patient_creation" class="btn btn-primary">Save</button>
+          </form>
+        </div>
+        <div class="" style=" height: 400px; border: 1px solid #ccc; background-color: gray;  margin-left: 80px; height: 300px; border-radius: 20px; background-color: rgba(255, 255, 255, 0.705); padding-left: 10px; padding-right: 10px" >
+          <h2>Search for a patient</h2>
+          <form method="post" action="">
+            {% csrf_token %}
+            <input type="text" id="my-input-field" name="my-input-field" placeholder="Search...">
+                <ul id="my-dropdown-menu" style="display: block;width: 203px;border-block: revert;background-color: rgba(255, 233, 144, 0.849);border-radius: 20px;padding-left: 10px; visibility:hidden;">
+                {% for obj in search_list %}
+                <li>{{ obj }}</li>
+                {% endfor %}
+                </ul>
+            <button type="submit" name="patient_search" class="btn btn-primary">Search</button>
+          </form>
+            {% if patients %}
+            <h3>Search results:</h3>
+            <ul>
+              {% for patient in patients %}
+              <a href="{% url 'patientview' id=patient.patient_id %}">
+              <li>{{ patient.name }} ({{ patient.dob }}) {{patient.patient_id}}</li>
+                </a>
+              {% empty %}
+                <li>No patients found.</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="" style=" height: 400px; border: 1px solid #ccc; background-color: gray; border-radius: 20px; margin-left: 80px; height: 300px; border: 1px solid #ccc; background-color: rgba(255, 255, 255, 0.705); padding-left: 10px; padding-right: 10px;">
+          <h2>Make a payment</h2>
+          <form method="post" action="">
+            {% csrf_token %}
+            {{ payment_form.as_p }}
+            <button type="submit" name="payment" class="btn btn-primary">Pay</button>
+          </form>
+        </div>
+      </div>    
+</div>
+<script>
+var inputField = document.getElementById("my-input-field");
+var dropdownMenu = document.getElementById("my-dropdown-menu");
+var items = dropdownMenu.getElementsByTagName("li");
+
+inputField.addEventListener("input", function() {
+  var filter = inputField.value.toUpperCase();
+  for (var i = 0; i < items.length; i++) {
+    var itemText = items[i].textContent || items[i].innerText;
+    if (itemText.toUpperCase().indexOf(filter) > -1) {
+      items[i].style.display = "";
+    } else {
+      items[i].style.display = "none";
+    }
+  }
+  dropdownMenu.style.display = "block";
+  dropdownMenu.style.visibility = "visible"
+});
+
+document.addEventListener("click", function(event) {
+  if (event.target != inputField) {
+    dropdownMenu.style.display = "none";
+    dropdownMenu.style.visibility = "hidden"
+  }
+});
+
+for (var i = 0; i < items.length; i++) {
+  items[i].addEventListener("click", function(event) {
+    inputField.value = event.target.textContent || event.target.innerText;
+    dropdownMenu.style.display = "none";
+  });
+}
+</script>
+{% endblock %}

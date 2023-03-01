@@ -1,0 +1,95 @@
+{% extends 'main_app/base.html' %}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+            <div class="row mt-5">
+                <div class="col ml-3">
+                  <div class="card h-100 w-300">
+                    <div class="card-body">
+                      <h5 class="card-title, text-dark">Total Income</h5>
+                      <h3 class="text-success">{{total_income}}</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title, text-dark">Registered Patients</h5>
+                      <h3 class="text-primary">{{total_patients}}</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title, text-dark">Income Today</h5>
+                      <h3 class="text-warning">{{today_income}}</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="col mr-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h5 class="card-title, text-dark">Total doctors</h5>
+                      <br>
+                      <h3 class="text-secondary">{{total_doctors}}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+          <div class="row mt-5">
+            <div class="col ml-3 mr-3">
+              <div class="card h-100">
+                <div class="card-body, text-dark">
+                  <h5>Appointments Today</h5>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Appointment Time</th>
+                        <th scope="col">Doctor Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>example</td>
+                        <td>example</td>
+                        <td>example</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          
+          <div class="row mt-5">
+            <div class="col ml-3 mr-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5>Messages</h5>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Sent At</th>
+                        <th scope="col">Message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>example</td>
+                        <td>example</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+
+{% endblock %}
